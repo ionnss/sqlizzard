@@ -14,10 +14,18 @@ const (
 
 // BTree is a B-tree
 type BTree struct {
-	// pointer (a nonzero page number)
+	// pointer to the root node page number
+	// each page on a disk is 4 KB in size
+	// the number root points to a specific page on the disk where the root node is stored
 	root uint64
-	// callback for managing on-disk pages
-	get func(uint64) BNode // deference a pointer
+
+	// callback functionsfor managing on-disk pages
+	// get is a function that takes a page number and returns a BNode
+	get func(uint64) BNode // dereference a pointer
+
+	// new is a function that takes a BNode and returns a page number
 	new func(BNode) uint64 // allocate a new page
-	del func(uint64)       // deallocate a page
+
+	// del is a function that takes a page number and deallocates it
+	del func(uint64) // deallocate a page
 }
